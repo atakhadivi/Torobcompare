@@ -89,12 +89,13 @@ class Torob_Frontend {
             return;
         }
         
-        echo '<div id="torob-price-compare" class="torob-price-compare" data-product-id="' . esc_attr($product_id) . '" data-product-name="' . esc_attr($product_name) . '">';
+        echo '<div id="torob-price-compare" class="torob-price-compare" data-product-id="' . esc_attr($product_id) . '" data-product-name="' . esc_attr($product_name) . '" data-auto-search="true">';
         
-        if ($cached_price) {
+        if ($cached_price && !empty($cached_price['min_price'])) {
             $this->render_price_comparison($cached_price, $product_price);
         } else {
-            $this->render_search_button();
+            // Show loading state immediately and start auto search
+            $this->render_loading_state();
         }
         
         echo '</div>';
@@ -168,7 +169,19 @@ class Torob_Frontend {
     }
     
     /**
-     * Render search button
+     * Render loading state for auto search
+     */
+    private function render_loading_state() {
+        echo '<div class="torob-search-container">';
+        echo '<div class="torob-loading" style="display: block;">';
+        echo '<span class="spinner is-active"></span>';
+        echo '<span class="loading-text">در حال جستجو قیمت در ترب...</span>';
+        echo '</div>';
+        echo '</div>';
+    }
+    
+    /**
+     * Render search button (fallback)
      */
     private function render_search_button() {
         $button_text = get_option('torob_button_text', 'مقایسه قیمت در ترب');

@@ -18,6 +18,22 @@ class Torob_API {
     private $base_url = 'https://torob.com';
     
     /**
+     * Torob API base URL
+     */
+    private $api_base_url = 'https://api.torob.com/v4';
+    
+    /**
+     * API endpoints
+     */
+    private $endpoints = array(
+        'search' => '/base-product/search/',
+        'suggestion' => '/base-product/suggestion/',
+        'details' => '/base-product/details-v2/',
+        'special_offers' => '/base-product/special-offers/',
+        'price_chart' => '/base-product/price-chart/'
+    );
+    
+    /**
      * Search logs table
      */
     private $logs_table;
@@ -372,8 +388,14 @@ class Torob_API {
      * @return string Random user agent
      */
     private function get_random_user_agent() {
-        $index = array_rand($this->user_agents);
-        return $this->user_agents[$index];
+        $user_agents = array(
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0',
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15'
+        );
+        
+        return $user_agents[array_rand($user_agents)];
     }
     
     /**
@@ -680,5 +702,467 @@ class Torob_API {
         );
         
         return $result;
+    }
+    
+    /**
+     * Get product suggestions from Torob API
+     *
+     * @param string $query Search query
+     * @return array|WP_Error Suggestions array or error
+     */
+    public function suggestion($query) {
+        if (empty($query)) {
+            return new WP_Error('empty_query', 'کوئری جستجو نمی‌تواند خالی باشد');
+        }
+        
+        $start_time = microtime(true);
+        
+        // Build suggestion URL
+        $suggestion_url = 'https://api.torob.com/v4/base-product/search-suggestion-products/';
+        $suggestion_url .= '?q=' . urlencode($query);
+        
+        $user_agent = $this->get_random_user_agent();
+        
+        $args = array(
+            'timeout' => 15,
+            'user-agent' => $user_agent,
+            'headers' => array(
+                'Accept' => 'application/json, text/plain, */*',
+                'Accept-Language' => 'fa-IR,fa;q=0.9,en-US;q=0.8,en;q=0.7',
+                'Accept-Encoding' => 'gzip, deflate, br',
+                'Cache-Control' => 'no-cache',
+                'Pragma' => 'no-cache',
+                'DNT' => '1',
+                'Connection' => 'keep-alive',
+                'Sec-Fetch-Dest' => 'empty',
+                'Sec-Fetch-Mode' => 'cors',
+                'Sec-Fetch-Site' => 'same-site',
+                'Referer' => 'https://torob.com/',
+                'Origin' => 'https://torob.com',
+                'X-Requested-With' => 'XMLHttpRequest'
+            ),
+            'sslverify' => false
+        );
+        
+        // Add delay to avoid rate limiting
+        sleep(1);
+        
+        $response = wp_remote_get($suggestion_url, $args);
+        $response_time = round((microtime(true) - $start_time) * 1000);
+        
+        if (is_wp_error($response)) {
+            return new WP_Error('connection_error', 'خطا در اتصال به API ترب: ' . $response->get_error_message());
+        }
+        
+        $response_code = wp_remote_retrieve_response_code($response);
+        $body = wp_remote_retrieve_body($response);
+        
+        if ($response_code !== 200) {
+            return new WP_Error('api_error', 'خطا در دریافت پیشنهادات از ترب. کد خطا: ' . $response_code);
+        }
+        
+        if (empty($body)) {
+            return new WP_Error('empty_response', 'پاسخ خالی از API ترب');
+        }
+        
+        $data = json_decode($body, true);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return new WP_Error('json_error', 'خطا در تجزیه JSON: ' . json_last_error_msg());
+        }
+        
+        return array(
+            'success' => true,
+            'data' => $data,
+            'response_time' => $response_time,
+            'query' => $query
+        );
+    }
+    
+    /**
+     * Search products using Torob API
+     *
+     * @param string $query Search query
+     * @param int $page Page number (default: 1)
+     * @param int $size Results per page (default: 24)
+     * @return array|WP_Error Search results or error
+     */
+    public function api_search($query, $page = 1, $size = 24) {
+        if (empty($query)) {
+            return new WP_Error('empty_query', 'کوئری جستجو نمی‌تواند خالی باشد');
+        }
+        
+        $start_time = microtime(true);
+        
+        // Build search URL with complete parameters
+        $search_url = 'https://api.torob.com/v4/base-product/search/';
+        $search_url .= '?page=' . intval($page - 1); // API uses 0-based indexing
+        $search_url .= '&sort=popularity';
+        $search_url .= '&size=' . intval($size);
+        $search_url .= '&query=' . urlencode($query);
+        $search_url .= '&q=' . urlencode($query);
+        $search_url .= '&source=next_desktop';
+        
+        $user_agent = $this->get_random_user_agent();
+        
+        $args = array(
+            'timeout' => 15,
+            'user-agent' => $user_agent,
+            'headers' => array(
+                'Accept' => 'application/json, text/plain, */*',
+                'Accept-Language' => 'fa-IR,fa;q=0.9,en-US;q=0.8,en;q=0.7',
+                'Accept-Encoding' => 'gzip, deflate, br',
+                'Cache-Control' => 'no-cache',
+                'Pragma' => 'no-cache',
+                'DNT' => '1',
+                'Connection' => 'keep-alive',
+                'Sec-Fetch-Dest' => 'empty',
+                'Sec-Fetch-Mode' => 'cors',
+                'Sec-Fetch-Site' => 'same-site',
+                'Referer' => 'https://torob.com/',
+                'Origin' => 'https://torob.com',
+                'X-Requested-With' => 'XMLHttpRequest'
+            ),
+            'sslverify' => false
+        );
+        
+        // Add delay to avoid rate limiting
+        sleep(1);
+        
+        $response = wp_remote_get($search_url, $args);
+        $response_time = round((microtime(true) - $start_time) * 1000);
+        
+        if (is_wp_error($response)) {
+            return new WP_Error('connection_error', 'خطا در اتصال به API ترب: ' . $response->get_error_message());
+        }
+        
+        $response_code = wp_remote_retrieve_response_code($response);
+        $body = wp_remote_retrieve_body($response);
+        
+        if ($response_code !== 200) {
+            return new WP_Error('api_error', 'خطا در جستجو در ترب. کد خطا: ' . $response_code);
+        }
+        
+        if (empty($body)) {
+            return new WP_Error('empty_response', 'پاسخ خالی از API ترب');
+        }
+        
+        $data = json_decode($body, true);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return new WP_Error('json_error', 'خطا در تجزیه JSON: ' . json_last_error_msg());
+        }
+        
+        return array(
+            'success' => true,
+            'data' => $data,
+            'response_time' => $response_time,
+            'query' => $query,
+            'page' => $page,
+            'size' => $size
+        );
+    }
+    
+    /**
+     * Get product details from Torob API
+     *
+     * @param string $product_id Product ID
+     * @return array|WP_Error Product details or error
+     */
+    public function details($product_id) {
+        if (empty($product_id)) {
+            return new WP_Error('empty_product_id', 'شناسه محصول نمی‌تواند خالی باشد');
+        }
+        
+        $start_time = microtime(true);
+        
+        // Build details URL
+        $details_url = 'https://api.torob.com/v4/base-product/details-log-price-chart/';
+        $details_url .= '?prk=' . urlencode($product_id);
+        
+        $user_agent = $this->get_random_user_agent();
+        
+        $args = array(
+            'timeout' => 15,
+            'user-agent' => $user_agent,
+            'headers' => array(
+                'Accept' => 'application/json, text/plain, */*',
+                'Accept-Language' => 'fa-IR,fa;q=0.9,en-US;q=0.8,en;q=0.7',
+                'Accept-Encoding' => 'gzip, deflate, br',
+                'Cache-Control' => 'no-cache',
+                'Pragma' => 'no-cache',
+                'DNT' => '1',
+                'Connection' => 'keep-alive',
+                'Sec-Fetch-Dest' => 'empty',
+                'Sec-Fetch-Mode' => 'cors',
+                'Sec-Fetch-Site' => 'same-site',
+                'Referer' => 'https://torob.com/',
+                'Origin' => 'https://torob.com',
+                'X-Requested-With' => 'XMLHttpRequest'
+            ),
+            'sslverify' => false
+        );
+        
+        // Add delay to avoid rate limiting
+        sleep(1);
+        
+        $response = wp_remote_get($details_url, $args);
+        $response_time = round((microtime(true) - $start_time) * 1000);
+        
+        if (is_wp_error($response)) {
+            return new WP_Error('connection_error', 'خطا در اتصال به API ترب: ' . $response->get_error_message());
+        }
+        
+        $response_code = wp_remote_retrieve_response_code($response);
+        $body = wp_remote_retrieve_body($response);
+        
+        if ($response_code !== 200) {
+            return new WP_Error('api_error', 'خطا در دریافت جزئیات محصول از ترب. کد خطا: ' . $response_code);
+        }
+        
+        if (empty($body)) {
+            return new WP_Error('empty_response', 'پاسخ خالی از API ترب');
+        }
+        
+        $data = json_decode($body, true);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return new WP_Error('json_error', 'خطا در تجزیه JSON: ' . json_last_error_msg());
+        }
+        
+        return array(
+            'success' => true,
+            'data' => $data,
+            'response_time' => $response_time,
+            'product_id' => $product_id
+        );
+    }
+    
+    /**
+     * Get special offers from Torob API
+     *
+     * @param string $product_id Product ID
+     * @return array|WP_Error Special offers or error
+     */
+    public function special_offers($product_id) {
+        if (empty($product_id)) {
+            return new WP_Error('empty_product_id', 'شناسه محصول نمی‌تواند خالی باشد');
+        }
+        
+        $start_time = microtime(true);
+        
+        // Build special offers URL
+        $offers_url = 'https://api.torob.com/v4/base-product/search-product-offers/';
+        $offers_url .= '?prk=' . urlencode($product_id);
+        
+        $user_agent = $this->get_random_user_agent();
+        
+        $args = array(
+            'timeout' => 15,
+            'user-agent' => $user_agent,
+            'headers' => array(
+                'Accept' => 'application/json, text/plain, */*',
+                'Accept-Language' => 'fa-IR,fa;q=0.9,en-US;q=0.8,en;q=0.7',
+                'Accept-Encoding' => 'gzip, deflate, br',
+                'Cache-Control' => 'no-cache',
+                'Pragma' => 'no-cache',
+                'DNT' => '1',
+                'Connection' => 'keep-alive',
+                'Sec-Fetch-Dest' => 'empty',
+                'Sec-Fetch-Mode' => 'cors',
+                'Sec-Fetch-Site' => 'same-site',
+                'Referer' => 'https://torob.com/',
+                'Origin' => 'https://torob.com',
+                'X-Requested-With' => 'XMLHttpRequest'
+            ),
+            'sslverify' => false
+        );
+        
+        // Add delay to avoid rate limiting
+        sleep(1);
+        
+        $response = wp_remote_get($offers_url, $args);
+        $response_time = round((microtime(true) - $start_time) * 1000);
+        
+        if (is_wp_error($response)) {
+            return new WP_Error('connection_error', 'خطا در اتصال به API ترب: ' . $response->get_error_message());
+        }
+        
+        $response_code = wp_remote_retrieve_response_code($response);
+        $body = wp_remote_retrieve_body($response);
+        
+        if ($response_code !== 200) {
+            return new WP_Error('api_error', 'خطا در دریافت پیشنهادات ویژه از ترب. کد خطا: ' . $response_code);
+        }
+        
+        if (empty($body)) {
+            return new WP_Error('empty_response', 'پاسخ خالی از API ترب');
+        }
+        
+        $data = json_decode($body, true);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return new WP_Error('json_error', 'خطا در تجزیه JSON: ' . json_last_error_msg());
+        }
+        
+        return array(
+            'success' => true,
+            'data' => $data,
+            'response_time' => $response_time,
+            'product_id' => $product_id
+        );
+    }
+    
+    /**
+     * Get price chart data from Torob API
+     *
+     * @param string $product_id Product ID
+     * @param int $days Number of days for price history (default: 30)
+     * @return array|WP_Error Price chart data or error
+     */
+    public function price_chart($product_id, $days = 30) {
+        if (empty($product_id)) {
+            return new WP_Error('empty_product_id', 'شناسه محصول نمی‌تواند خالی باشد');
+        }
+        
+        $start_time = microtime(true);
+        
+        // Build price chart URL
+        $chart_url = 'https://api.torob.com/v4/base-product/price-chart/';
+        $chart_url .= '?prk=' . urlencode($product_id);
+        $chart_url .= '&days=' . intval($days);
+        
+        $user_agent = $this->get_random_user_agent();
+        
+        $args = array(
+            'timeout' => 15,
+            'user-agent' => $user_agent,
+            'headers' => array(
+                'Accept' => 'application/json, text/plain, */*',
+                'Accept-Language' => 'fa-IR,fa;q=0.9,en-US;q=0.8,en;q=0.7',
+                'Accept-Encoding' => 'gzip, deflate, br',
+                'Cache-Control' => 'no-cache',
+                'Pragma' => 'no-cache',
+                'DNT' => '1',
+                'Connection' => 'keep-alive',
+                'Sec-Fetch-Dest' => 'empty',
+                'Sec-Fetch-Mode' => 'cors',
+                'Sec-Fetch-Site' => 'same-site',
+                'Referer' => 'https://torob.com/',
+                'Origin' => 'https://torob.com',
+                'X-Requested-With' => 'XMLHttpRequest'
+            ),
+            'sslverify' => false
+        );
+        
+        // Add delay to avoid rate limiting
+        sleep(1);
+        
+        $response = wp_remote_get($chart_url, $args);
+        $response_time = round((microtime(true) - $start_time) * 1000);
+        
+        if (is_wp_error($response)) {
+            return new WP_Error('connection_error', 'خطا در اتصال به API ترب: ' . $response->get_error_message());
+        }
+        
+        $response_code = wp_remote_retrieve_response_code($response);
+        $body = wp_remote_retrieve_body($response);
+        
+        if ($response_code !== 200) {
+            return new WP_Error('api_error', 'خطا در دریافت نمودار قیمت از ترب. کد خطا: ' . $response_code);
+        }
+        
+        if (empty($body)) {
+            return new WP_Error('empty_response', 'پاسخ خالی از API ترب');
+        }
+        
+        $data = json_decode($body, true);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return new WP_Error('json_error', 'خطا در تجزیه JSON: ' . json_last_error_msg());
+        }
+        
+        return array(
+            'success' => true,
+            'data' => $data,
+            'response_time' => $response_time,
+            'product_id' => $product_id,
+            'days' => $days
+        );
+    }
+    
+    /**
+     * Test product search with Samsung A56 5G
+     *
+     * @return array Test results
+     */
+    public function test_product_search() {
+        $test_query = 'گوشی سامسونگ A56 5G';
+        
+        echo "<h3>تست جستجوی محصول: {$test_query}</h3>";
+        
+        // Test suggestion method
+        echo "<h4>1. تست متد suggestion:</h4>";
+        $suggestion_result = $this->suggestion($test_query);
+        
+        if (is_wp_error($suggestion_result)) {
+            echo "<p style='color: red;'>خطا در suggestion: " . $suggestion_result->get_error_message() . "</p>";
+        } else {
+            echo "<p style='color: green;'>suggestion موفقیت‌آمیز - زمان پاسخ: " . $suggestion_result['response_time'] . " میلی‌ثانیه</p>";
+            if (isset($suggestion_result['data']) && !empty($suggestion_result['data'])) {
+                echo "<p>تعداد پیشنهادات: " . count($suggestion_result['data']) . "</p>";
+            }
+        }
+        
+        // Test API search method
+        echo "<h4>2. تست متد api_search:</h4>";
+        $search_result = $this->api_search($test_query);
+        
+        if (is_wp_error($search_result)) {
+            echo "<p style='color: red;'>خطا در api_search: " . $search_result->get_error_message() . "</p>";
+        } else {
+            echo "<p style='color: green;'>api_search موفقیت‌آمیز - زمان پاسخ: " . $search_result['response_time'] . " میلی‌ثانیه</p>";
+            if (isset($search_result['data']['results']) && !empty($search_result['data']['results'])) {
+                echo "<p>تعداد نتایج: " . count($search_result['data']['results']) . "</p>";
+                
+                // Test details method with first product
+                $first_product = $search_result['data']['results'][0];
+                if (isset($first_product['prk'])) {
+                    echo "<h4>3. تست متد details برای اولین محصول:</h4>";
+                    $details_result = $this->details($first_product['prk']);
+                    
+                    if (is_wp_error($details_result)) {
+                        echo "<p style='color: red;'>خطا در details: " . $details_result->get_error_message() . "</p>";
+                    } else {
+                        echo "<p style='color: green;'>details موفقیت‌آمیز - زمان پاسخ: " . $details_result['response_time'] . " میلی‌ثانیه</p>";
+                    }
+                    
+                    // Test special offers method
+                    echo "<h4>4. تست متد special_offers:</h4>";
+                    $offers_result = $this->special_offers($first_product['prk']);
+                    
+                    if (is_wp_error($offers_result)) {
+                        echo "<p style='color: red;'>خطا در special_offers: " . $offers_result->get_error_message() . "</p>";
+                    } else {
+                        echo "<p style='color: green;'>special_offers موفقیت‌آمیز - زمان پاسخ: " . $offers_result['response_time'] . " میلی‌ثانیه</p>";
+                    }
+                    
+                    // Test price chart method
+                    echo "<h4>5. تست متد price_chart:</h4>";
+                    $chart_result = $this->price_chart($first_product['prk']);
+                    
+                    if (is_wp_error($chart_result)) {
+                        echo "<p style='color: red;'>خطا در price_chart: " . $chart_result->get_error_message() . "</p>";
+                    } else {
+                        echo "<p style='color: green;'>price_chart موفقیت‌آمیز - زمان پاسخ: " . $chart_result['response_time'] . " میلی‌ثانیه</p>";
+                    }
+                }
+            }
+        }
+        
+        return array(
+            'suggestion' => $suggestion_result,
+            'search' => $search_result
+        );
     }
 }

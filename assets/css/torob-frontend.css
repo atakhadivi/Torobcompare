@@ -261,18 +261,230 @@
     text-align: center;
     padding: 20px;
     color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
-.torob-loading::before {
-    content: "";
-    display: inline-block;
+.torob-loading .spinner {
     width: 20px;
     height: 20px;
     border: 2px solid #f3f3f3;
     border-top: 2px solid #3498db;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin-left: 10px;
+}
+
+.torob-loading .loading-text {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Auto Search Loading State */
+.torob-price-compare[data-auto-search="true"] .torob-loading {
+    background: #f8f9fa;
+    border: 1px dashed #dee2e6;
+    border-radius: 8px;
+    margin: 10px 0;
+    padding: 15px;
+}
+
+/* Error States */
+.torob-error {
+    padding: 15px;
+    background: #fff2f2;
+    border: 1px solid #ffcccc;
+    border-radius: 6px;
+    margin: 10px 0;
+    text-align: center;
+    position: relative;
+}
+
+.torob-error-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    color: #d63638;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.torob-error .error-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.torob-error .error-text {
+    flex: 1;
+}
+
+.torob-error-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.torob-retry-btn {
+    background: #0073aa;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    min-width: 100px;
+}
+
+.torob-retry-btn:hover {
+    background: #005a87;
+    transform: translateY(-1px);
+}
+
+.torob-manual-search-btn {
+    background: transparent;
+    color: #0073aa;
+    border: 1px solid #0073aa;
+    padding: 7px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.torob-manual-search-btn:hover {
+    background: #0073aa;
+    color: white;
+    text-decoration: none;
+}
+
+.error-help {
+    color: #666;
+    font-size: 12px;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Different error types */
+.torob-error-no_internet {
+    background: #e8f4fd;
+    border-color: #b3d9ff;
+}
+
+.torob-error-no_internet .torob-error-message {
+    color: #0073aa;
+}
+
+.torob-error-timeout {
+    background: #fff8e1;
+    border-color: #ffcc02;
+}
+
+.torob-error-timeout .torob-error-message {
+    color: #b8860b;
+}
+
+.torob-error-server_error {
+    background: #ffeaa7;
+    border-color: #fdcb6e;
+}
+
+.torob-error-server_error .torob-error-message {
+    color: #e17055;
+}
+
+.torob-error-missing_data {
+    background: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+.torob-error-missing_data .torob-error-message {
+    color: #6c757d;
+}
+
+/* Price Display Improvements */
+.torob-price-display .torob-price-info {
+    margin-bottom: 15px;
+}
+
+.torob-price-display .torob-price-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.torob-price-display .torob-price-amount {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2c5aa0;
+    display: block;
+}
+
+.torob-price-display .torob-savings {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #e8f5e8;
+    border-radius: 6px;
+    color: #27ae60;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.torob-price-display .torob-actions {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.torob-price-display .torob-link {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    padding: 10px 15px;
+    background: #ff6b35;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.torob-price-display .torob-link:hover {
+    background: #e55a2b;
+    color: white;
+    text-decoration: none;
+}
+
+.torob-price-display .torob-refresh {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s;
+}
+
+.torob-price-display .torob-refresh:hover {
+    background: #5a6268;
+}
+
+.torob-price-display .torob-meta {
+    font-size: 12px;
+    color: #6c757d;
+    text-align: center;
+    border-top: 1px solid #e9ecef;
+    padding-top: 10px;
+    margin-top: 15px;
 }
 
 /* Responsive Design */

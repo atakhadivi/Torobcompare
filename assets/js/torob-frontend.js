@@ -14,6 +14,7 @@
         init: function() {
             this.bindEvents();
             this.autoLoadPrices();
+            this.autoSearchOnLoad();
         },
         
         /**
@@ -160,23 +161,207 @@
         },
         
         /**
-         * Auto search for price on page load
+         * Auto search on page load for containers with auto-search enabled
          */
-        autoSearchPrice: function() {
-            var $container = $('.torob-price-comparison');
-            var $searchBtn = $container.find('.torob-search-btn');
+        autoSearchOnLoad: function() {
+            var self = this;
             
-            if ($searchBtn.length && !$container.find('.torob-price-display').length) {
-                // Check if we have cached data first
-                this.checkCachedPrice($searchBtn.data('product-id'), function(hasCache) {
-                    if (!hasCache) {
-                        // Trigger search after a short delay
-                        setTimeout(function() {
-                            $searchBtn.trigger('click');
-                        }, 1000);
-                    }
-                });
+            $('.torob-price-compare[data-auto-search="true"]').each(function() {
+                var $container = $(this);
+                var productId = $container.data('product-id');
+                var productName = $container.data('product-name');
+                
+                if (productId && productName && !$container.find('.torob-price-display').length) {
+                    // Start auto search after a short delay
+                    setTimeout(function() {
+                        self.performAutoSearch($container, productId, productName);
+                    }, 500);
+                }
+            });
+        },
+        
+        /**
+         * Perform automatic search
+         */
+        performAutoSearch: function($container, productId, productName) {
+            var self = this;
+            
+            if (!productId || !productName) {
+                this.showAutoSearchError($container, 'اطلاعات محصول یافت نشد', 'missing_data');
+                return;
             }
+            
+            // AJAX request for auto search
+            $.ajax({
+                url: torob_ajax.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'torob_search_price',
+                    product_id: productId,
+                    product_name: productName,
+                    nonce: torob_ajax.nonce
+                },
+                timeout: 30000, // 30 second timeout
+                success: function(response) {
+                    if (response.success && response.data) {
+                        // Replace loading with price display
+                        self.displayAutoSearchResult($container, response.data);
+                        
+                        // Track successful auto search
+                        self.trackEvent('auto_search_success', {
+                            product_id: productId,
+                            torob_price: response.data.min_price
+                        });
+                    } else {
+                        // Show error state
+                        var errorMessage = response.data || 'محصول در ترب یافت نشد';
+                        self.showAutoSearchError($container, errorMessage, 'search_failed');
+                        self.trackEvent('auto_search_error', {
+                            product_id: productId,
+                            error: errorMessage
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = 'خطا در ارتباط با سرور';
+                    var errorType = 'network_error';
+                    
+                    if (status === 'timeout') {
+                        errorMessage = 'زمان انتظار تمام شد. لطفاً دوباره تلاش کنید';
+                        errorType = 'timeout';
+                    } else if (xhr.status === 0) {
+                        errorMessage = 'عدم دسترسی به اینترنت';
+                        errorType = 'no_internet';
+                    } else if (xhr.status >= 500) {
+                        errorMessage = 'خطای سرور. لطفاً بعداً تلاش کنید';
+                        errorType = 'server_error';
+                    }
+                    
+                    // Show error state
+                    self.showAutoSearchError($container, errorMessage, errorType);
+                    self.trackEvent('auto_search_error', {
+                        product_id: productId,
+                        error: errorMessage,
+                        error_type: errorType,
+                        status_code: xhr.status
+                    });
+                    console.error('Torob Auto Search Error:', error);
+                }
+            });
+        },
+        
+        /**
+         * Display auto search result
+         */
+        displayAutoSearchResult: function($container, data) {
+            var torobPrice = parseInt(data.min_price);
+            var productPrice = parseFloat($container.closest('.product').find('.price .amount').text().replace(/[^0-9]/g, '')) || 0;
+            var savings = productPrice > torobPrice ? productPrice - torobPrice : 0;
+            
+            var priceHtml = '<div class="torob-price-display">';
+            priceHtml += '<div class="torob-price-info">';
+            priceHtml += '<span class="torob-price-label">کمترین قیمت در ترب:</span>';
+            priceHtml += '<span class="torob-price-amount">' + this.formatPrice(torobPrice) + ' تومان</span>';
+            
+            if (savings > 0) {
+                priceHtml += '<div class="torob-savings">';
+                priceHtml += '<span class="savings-text">شما ' + this.formatPrice(savings) + ' تومان صرفه‌جویی می‌کنید!</span>';
+                priceHtml += '</div>';
+            }
+            
+            priceHtml += '</div>';
+            
+            if (data.torob_url) {
+                priceHtml += '<div class="torob-actions">';
+                priceHtml += '<a href="' + data.torob_url + '" target="_blank" class="torob-link button">مشاهده در ترب</a>';
+                priceHtml += '<button type="button" class="torob-refresh button-secondary" data-product-id="' + data.product_id + '">بروزرسانی قیمت</button>';
+                priceHtml += '</div>';
+            }
+            
+            priceHtml += '<div class="torob-meta">';
+            priceHtml += '<small>بروزرسانی شده در ' + new Date().toLocaleString('fa-IR') + '</small>';
+            if (data.found_products) {
+                priceHtml += '<small> • ' + data.found_products + ' فروشگاه</small>';
+            }
+            priceHtml += '</div>';
+            
+            priceHtml += '</div>';
+            
+            // Replace loading with price display
+            $container.html(priceHtml);
+        },
+        
+        /**
+         * Show auto search error
+         */
+        showAutoSearchError: function($container, errorMessage, errorType) {
+            var errorHtml = '<div class="torob-error torob-error-' + (errorType || 'general') + '">';
+            errorHtml += '<div class="torob-error-message">';
+            
+            // Different icons for different error types
+            var errorIcon = '⚠️';
+            if (errorType === 'no_internet') {
+                errorIcon = '🌐';
+            } else if (errorType === 'timeout') {
+                errorIcon = '⏱️';
+            } else if (errorType === 'server_error') {
+                errorIcon = '🔧';
+            }
+            
+            errorHtml += '<span class="error-icon">' + errorIcon + '</span>';
+            errorHtml += '<span class="error-text">' + errorMessage + '</span>';
+            errorHtml += '</div>';
+            
+            // Different retry options based on error type
+            if (errorType === 'no_internet') {
+                errorHtml += '<div class="torob-error-actions">';
+                errorHtml += '<button type="button" class="torob-retry-btn button-secondary" onclick="location.reload()">بررسی اتصال</button>';
+                errorHtml += '</div>';
+            } else if (errorType === 'missing_data') {
+                errorHtml += '<div class="torob-error-actions">';
+                errorHtml += '<small class="error-help">لطفاً صفحه را بازخوانی کنید</small>';
+                errorHtml += '</div>';
+            } else {
+                errorHtml += '<div class="torob-error-actions">';
+                errorHtml += '<button type="button" class="torob-retry-btn button-secondary" data-product-id="' + $container.data('product-id') + '" data-product-name="' + $container.data('product-name') + '">تلاش مجدد</button>';
+                errorHtml += '<button type="button" class="torob-manual-search-btn button-link" data-product-id="' + $container.data('product-id') + '" data-product-name="' + $container.data('product-name') + '">جستجوی دستی</button>';
+                errorHtml += '</div>';
+            }
+            
+            errorHtml += '</div>';
+            
+            // Replace loading with error display
+            $container.html(errorHtml);
+            
+            // Bind retry button
+            $container.find('.torob-retry-btn').on('click', function() {
+                var $btn = $(this);
+                var productId = $btn.data('product-id');
+                var productName = $btn.data('product-name');
+                
+                if (productId && productName) {
+                    // Show loading state again
+                    TorobFrontend.showLoadingState($container);
+                    // Retry search
+                    setTimeout(function() {
+                        TorobFrontend.performAutoSearch($container, productId, productName);
+                    }, 500);
+                } else {
+                    location.reload();
+                }
+            });
+            
+            // Bind manual search button
+            $container.find('.torob-manual-search-btn').on('click', function() {
+                var $btn = $(this);
+                var productId = $btn.data('product-id');
+                var productName = $btn.data('product-name');
+                
+                if (productId && productName) {
+                    // Show search button instead of auto search
+                    TorobFrontend.showManualSearchOption($container, productId, productName);
+                }
+            });
         },
         
         /**
@@ -322,6 +507,39 @@
             if (torob_frontend_vars.debug) {
                 console.log('Torob Event:', eventName, data);
             }
+        },
+        
+        /**
+         * Show loading state
+         */
+        showLoadingState: function($container) {
+            var loadingHtml = '<div class="torob-loading-state">';
+            loadingHtml += '<div class="torob-spinner"></div>';
+            loadingHtml += '<span class="torob-loading-text">در حال جستجوی قیمت در ترب...</span>';
+            loadingHtml += '</div>';
+            
+            $container.html(loadingHtml);
+        },
+        
+        /**
+         * Show manual search option
+         */
+        showManualSearchOption: function($container, productId, productName) {
+            var searchHtml = '<div class="torob-search-container">';
+            searchHtml += '<button class="torob-search-btn button-primary" data-product-id="' + productId + '" data-product-name="' + productName + '">';
+            searchHtml += '<span class="torob-btn-text">جستجو در ترب</span>';
+            searchHtml += '</button>';
+            searchHtml += '<small class="torob-search-help">برای مقایسه قیمت کلیک کنید</small>';
+            searchHtml += '</div>';
+            
+            $container.html(searchHtml);
+            
+            // Bind search button
+            $container.find('.torob-search-btn').on('click', function() {
+                var $btn = $(this);
+                TorobFrontend.setLoadingState($btn, true);
+                TorobFrontend.searchPrice($btn);
+            });
         },
         
         /**

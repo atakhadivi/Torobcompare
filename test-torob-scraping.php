@@ -128,17 +128,19 @@ $wpdb = new MockWPDB();
 // Include the Torob API class
 require_once dirname(__FILE__) . '/includes/class-torob-api.php';
 
-// Test the web scraping functionality
-echo "=== Testing Torob Web Scraping Functionality ===\n\n";
+// Test the Torob API functionality
+echo "=== Testing Torob API Functionality ===\n\n";
 
 // Create Torob API instance
 $torob_api = new Torob_API();
 
-// Test products
+// Test 1: Original web scraping functionality
+echo "=== 1. Testing Original Web Scraping ===\n";
 $test_products = array(
     array('id' => 1, 'name' => 'iPhone 15'),
     array('id' => 2, 'name' => 'Samsung Galaxy S24'),
-    array('id' => 3, 'name' => 'لپ تاپ ایسوس')
+    array('id' => 3, 'name' => 'لپ تاپ ایسوس'),
+    array('id' => 4, 'name' => 'گوشی سامسونگ A56 5G | حافظه 256 رم 8 گیگابایت')
 );
 
 foreach ($test_products as $product) {
@@ -166,8 +168,93 @@ foreach ($test_products as $product) {
     echo "\n";
     
     // Add delay between requests to be respectful
-    sleep(2);
+    sleep(1);
 }
+
+// Test 2: New API methods
+echo "\n=== 2. Testing New API Methods ===\n";
+
+// Test the comprehensive Samsung A56 5G search
+echo "\n--- Testing Samsung A56 5G Comprehensive Search ---\n";
+$torob_api->test_product_search();
+
+// Test suggestion method
+echo "\n--- Testing Suggestion Method ---\n";
+$test_queries = array('موبایل سامسونگ', 'لپ تاپ', 'هدفون');
+
+foreach ($test_queries as $query) {
+    echo "Testing suggestion for: {$query}\n";
+    $suggestion_result = $torob_api->suggestion($query);
+    
+    if (is_wp_error($suggestion_result)) {
+        echo "✗ Error: " . $suggestion_result->get_error_message() . "\n";
+    } else {
+        echo "✓ Success! Response time: " . $suggestion_result['response_time'] . "ms\n";
+        if (isset($suggestion_result['data']) && is_array($suggestion_result['data'])) {
+            echo "  Suggestions count: " . count($suggestion_result['data']) . "\n";
+        }
+    }
+    echo "\n";
+    sleep(1);
+}
+
+// Test API search method
+echo "\n--- Testing API Search Method ---\n";
+$search_queries = array('گوشی سامسونگ A56', 'آیفون 15', 'لپ تاپ ایسوس');
+
+foreach ($search_queries as $query) {
+    echo "Testing API search for: {$query}\n";
+    $search_result = $torob_api->api_search($query);
+    
+    if (is_wp_error($search_result)) {
+        echo "✗ Error: " . $search_result->get_error_message() . "\n";
+    } else {
+        echo "✓ Success! Response time: " . $search_result['response_time'] . "ms\n";
+        if (isset($search_result['data']['results']) && is_array($search_result['data']['results'])) {
+            echo "  Results count: " . count($search_result['data']['results']) . "\n";
+            
+            // Test details, offers, and price chart for first product
+            if (!empty($search_result['data']['results'])) {
+                $first_product = $search_result['data']['results'][0];
+                if (isset($first_product['prk'])) {
+                    $product_id = $first_product['prk'];
+                    echo "  Testing details for product ID: {$product_id}\n";
+                    
+                    // Test details
+                    $details_result = $torob_api->details($product_id);
+                    if (is_wp_error($details_result)) {
+                        echo "    ✗ Details error: " . $details_result->get_error_message() . "\n";
+                    } else {
+                        echo "    ✓ Details success! Response time: " . $details_result['response_time'] . "ms\n";
+                    }
+                    
+                    // Test special offers
+                    $offers_result = $torob_api->special_offers($product_id);
+                    if (is_wp_error($offers_result)) {
+                        echo "    ✗ Offers error: " . $offers_result->get_error_message() . "\n";
+                    } else {
+                        echo "    ✓ Offers success! Response time: " . $offers_result['response_time'] . "ms\n";
+                    }
+                    
+                    // Test price chart
+                    $chart_result = $torob_api->price_chart($product_id);
+                    if (is_wp_error($chart_result)) {
+                        echo "    ✗ Price chart error: " . $chart_result->get_error_message() . "\n";
+                    } else {
+                        echo "    ✓ Price chart success! Response time: " . $chart_result['response_time'] . "ms\n";
+                    }
+                }
+            }
+        }
+    }
+    echo "\n";
+    sleep(1);
+}
+
+// Test 3: Samsung A56 5G specific test
+echo "\n=== 3. Samsung A56 5G Comprehensive Test ===\n";
+$samsung_test = $torob_api->test_product_search();
+echo "\nSamsung A56 5G test completed.\n";
 
 // Test connection
 echo "=== Testing Connection ===\n";
