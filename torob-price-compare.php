@@ -32,6 +32,13 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
     return;
 }
 
+// Declare WooCommerce HPOS compatibility
+add_action('before_woocommerce_init', function() {
+    if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+    }
+});
+
 // Define plugin constants
 define('TOROB_PRICE_COMPARE_VERSION', '1.0.0');
 define('TOROB_PRICE_COMPARE_PLUGIN_FILE', __FILE__);
