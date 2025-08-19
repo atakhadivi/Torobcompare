@@ -96,9 +96,9 @@ class Torob_Admin {
         wp_enqueue_script('jquery');
         wp_enqueue_script(
             'torob-admin',
-            TOROB_PLUGIN_URL . 'assets/js/admin.js',
+            TOROB_PRICE_COMPARE_PLUGIN_URL . 'assets/js/admin.js',
             array('jquery'),
-            TOROB_VERSION,
+            TOROB_PRICE_COMPARE_VERSION,
             true
         );
         
@@ -116,9 +116,9 @@ class Torob_Admin {
         
         wp_enqueue_style(
             'torob-admin',
-            TOROB_PLUGIN_URL . 'assets/css/admin.css',
+            TOROB_PRICE_COMPARE_PLUGIN_URL . 'assets/css/admin.css',
             array(),
-            TOROB_VERSION
+            TOROB_PRICE_COMPARE_VERSION
         );
     }
     

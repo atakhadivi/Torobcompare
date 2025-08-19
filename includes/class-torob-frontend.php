@@ -32,9 +32,9 @@ class Torob_Frontend {
         wp_enqueue_script('jquery');
         wp_enqueue_script(
             'torob-frontend',
-            TOROB_PLUGIN_URL . 'assets/js/frontend.js',
+            TOROB_PRICE_COMPARE_PLUGIN_URL . 'assets/js/frontend.js',
             array('jquery'),
-            TOROB_VERSION,
+            TOROB_PRICE_COMPARE_VERSION,
             true
         );
         
@@ -55,9 +55,9 @@ class Torob_Frontend {
         
         wp_enqueue_style(
             'torob-frontend',
-            TOROB_PLUGIN_URL . 'assets/css/frontend.css',
+            TOROB_PRICE_COMPARE_PLUGIN_URL . 'assets/css/frontend.css',
             array(),
-            TOROB_VERSION
+            TOROB_PRICE_COMPARE_VERSION
         );
     }
     
