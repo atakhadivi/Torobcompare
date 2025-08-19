@@ -1,0 +1,567 @@
+# Persian (Farsi) translation for Torob Price Compare plugin
+# Copyright (C) 2024
+# This file is distributed under the same license as the Torob Price Compare package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Torob Price Compare 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 12:00+0000\n"
+"PO-Revision-Date: 2024-01-01 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Persian\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
+
+# Plugin Information
+msgid "Torob Price Compare"
+msgstr "مقایسه قیمت ترب"
+
+msgid "Compare product prices with Torob marketplace and display the lowest price to customers."
+msgstr "مقایسه قیمت محصولات با بازار ترب و نمایش کمترین قیمت به مشتریان."
+
+# Admin Menu
+msgid "Torob Price Compare"
+msgstr "مقایسه قیمت ترب"
+
+msgid "Dashboard"
+msgstr "داشبورد"
+
+msgid "Settings"
+msgstr "تنظیمات"
+
+msgid "Reports"
+msgstr "گزارشات"
+
+msgid "Cache Management"
+msgstr "مدیریت کش"
+
+# Dashboard
+msgid "Welcome to Torob Price Compare"
+msgstr "به مقایسه قیمت ترب خوش آمدید"
+
+msgid "Monitor and compare your product prices with Torob marketplace"
+msgstr "قیمت محصولات خود را با بازار ترب نظارت و مقایسه کنید"
+
+msgid "Total Searches"
+msgstr "کل جستجوها"
+
+msgid "Cached Prices"
+msgstr "قیمت‌های کش شده"
+
+msgid "Success Rate"
+msgstr "نرخ موفقیت"
+
+msgid "Last Update"
+msgstr "آخرین بروزرسانی"
+
+msgid "Recent Activities"
+msgstr "فعالیت‌های اخیر"
+
+msgid "Search Statistics"
+msgstr "آمار جستجو"
+
+msgid "Cache Statistics"
+msgstr "آمار کش"
+
+msgid "No recent activities found."
+msgstr "هیچ فعالیت اخیری یافت نشد."
+
+# Settings
+msgid "General Settings"
+msgstr "تنظیمات عمومی"
+
+msgid "Enable Plugin"
+msgstr "فعال‌سازی پلاگین"
+
+msgid "Enable or disable the Torob price comparison feature"
+msgstr "فعال یا غیرفعال کردن ویژگی مقایسه قیمت ترب"
+
+msgid "Cache Duration (hours)"
+msgstr "مدت زمان کش (ساعت)"
+
+msgid "How long to cache price data before refreshing"
+msgstr "مدت زمان نگهداری داده‌های قیمت در کش قبل از بروزرسانی"
+
+msgid "Display Position"
+msgstr "موقعیت نمایش"
+
+msgid "Where to display the price comparison on product pages"
+msgstr "محل نمایش مقایسه قیمت در صفحات محصول"
+
+msgid "After Product Summary"
+msgstr "بعد از خلاصه محصول"
+
+msgid "After Product Price"
+msgstr "بعد از قیمت محصول"
+
+msgid "After Add to Cart Button"
+msgstr "بعد از دکمه افزودن به سبد"
+
+msgid "Custom Position (Shortcode)"
+msgstr "موقعیت سفارشی (شورت کد)"
+
+msgid "Search Button Text"
+msgstr "متن دکمه جستجو"
+
+msgid "Text displayed on the search button"
+msgstr "متن نمایش داده شده روی دکمه جستجو"
+
+msgid "Auto Search"
+msgstr "جستجوی خودکار"
+
+msgid "Automatically search for prices when product page loads"
+msgstr "جستجوی خودکار قیمت‌ها هنگام بارگذاری صفحه محصول"
+
+msgid "API Settings"
+msgstr "تنظیمات API"
+
+msgid "API Endpoint"
+msgstr "نقطه پایانی API"
+
+msgid "Torob API endpoint URL"
+msgstr "آدرس نقطه پایانی API ترب"
+
+msgid "API Key"
+msgstr "کلید API"
+
+msgid "Your Torob API key"
+msgstr "کلید API ترب شما"
+
+msgid "Request Timeout (seconds)"
+msgstr "زمان انتظار درخواست (ثانیه)"
+
+msgid "Maximum time to wait for API response"
+msgstr "حداکثر زمان انتظار برای پاسخ API"
+
+msgid "Rate Limit (requests per minute)"
+msgstr "محدودیت نرخ (درخواست در دقیقه)"
+
+msgid "Maximum number of API requests per minute"
+msgstr "حداکثر تعداد درخواست‌های API در دقیقه"
+
+msgid "Display Settings"
+msgstr "تنظیمات نمایش"
+
+msgid "Show Savings Amount"
+msgstr "نمایش مقدار صرفه‌جویی"
+
+msgid "Display how much customer can save"
+msgstr "نمایش مقدار صرفه‌جویی مشتری"
+
+msgid "Show Torob Link"
+msgstr "نمایش لینک ترب"
+
+msgid "Display link to Torob product page"
+msgstr "نمایش لینک به صفحه محصول در ترب"
+
+msgid "Custom CSS"
+msgstr "CSS سفارشی"
+
+msgid "Add custom CSS for price comparison display"
+msgstr "افزودن CSS سفارشی برای نمایش مقایسه قیمت"
+
+# Frontend
+msgid "Find Best Price on Torob"
+msgstr "یافتن بهترین قیمت در ترب"
+
+msgid "Compare Prices"
+msgstr "مقایسه قیمت‌ها"
+
+msgid "Searching for best prices..."
+msgstr "جستجو برای بهترین قیمت‌ها..."
+
+msgid "Refreshing prices..."
+msgstr "بروزرسانی قیمت‌ها..."
+
+msgid "Lowest Price on Torob"
+msgstr "کمترین قیمت در ترب"
+
+msgid "Your Store Price"
+msgstr "قیمت فروشگاه شما"
+
+msgid "You Save"
+msgstr "شما صرفه‌جویی می‌کنید"
+
+msgid "View on Torob"
+msgstr "مشاهده در ترب"
+
+msgid "Refresh Prices"
+msgstr "بروزرسانی قیمت‌ها"
+
+msgid "Price comparison data not available"
+msgstr "داده‌های مقایسه قیمت در دسترس نیست"
+
+msgid "No price data found on Torob"
+msgstr "هیچ داده قیمتی در ترب یافت نشد"
+
+msgid "Error loading price data"
+msgstr "خطا در بارگذاری داده‌های قیمت"
+
+msgid "Price data updated successfully"
+msgstr "داده‌های قیمت با موفقیت بروزرسانی شد"
+
+msgid "Failed to update price data"
+msgstr "بروزرسانی داده‌های قیمت ناموفق بود"
+
+# Cache Management
+msgid "Cache Overview"
+msgstr "نمای کلی کش"
+
+msgid "Total Cached Items"
+msgstr "کل آیتم‌های کش شده"
+
+msgid "Cache Hit Rate"
+msgstr "نرخ بازدید کش"
+
+msgid "Average Response Time"
+msgstr "میانگین زمان پاسخ"
+
+msgid "Cache Size"
+msgstr "اندازه کش"
+
+msgid "Clear All Cache"
+msgstr "پاک کردن کل کش"
+
+msgid "Clear Expired Cache"
+msgstr "پاک کردن کش منقضی شده"
+
+msgid "Refresh Cache"
+msgstr "بروزرسانی کش"
+
+msgid "Cache cleared successfully"
+msgstr "کش با موفقیت پاک شد"
+
+msgid "Failed to clear cache"
+msgstr "پاک کردن کش ناموفق بود"
+
+msgid "Cache refreshed successfully"
+msgstr "کش با موفقیت بروزرسانی شد"
+
+msgid "Recent Cache Entries"
+msgstr "ورودی‌های اخیر کش"
+
+msgid "Product"
+msgstr "محصول"
+
+msgid "Price"
+msgstr "قیمت"
+
+msgid "Cached At"
+msgstr "کش شده در"
+
+msgid "Expires At"
+msgstr "منقضی می‌شود در"
+
+msgid "Actions"
+msgstr "عملیات"
+
+msgid "Delete"
+msgstr "حذف"
+
+msgid "Refresh"
+msgstr "بروزرسانی"
+
+# Reports
+msgid "Price Comparison Reports"
+msgstr "گزارشات مقایسه قیمت"
+
+msgid "Search Logs"
+msgstr "لاگ‌های جستجو"
+
+msgid "Export Data"
+msgstr "صادرات داده‌ها"
+
+msgid "Date Range"
+msgstr "بازه زمانی"
+
+msgid "From"
+msgstr "از"
+
+msgid "To"
+msgstr "تا"
+
+msgid "Filter"
+msgstr "فیلتر"
+
+msgid "Export CSV"
+msgstr "صادرات CSV"
+
+msgid "Export JSON"
+msgstr "صادرات JSON"
+
+msgid "Search Date"
+msgstr "تاریخ جستجو"
+
+msgid "Product Name"
+msgstr "نام محصول"
+
+msgid "Store Price"
+msgstr "قیمت فروشگاه"
+
+msgid "Torob Price"
+msgstr "قیمت ترب"
+
+msgid "Savings"
+msgstr "صرفه‌جویی"
+
+msgid "Status"
+msgstr "وضعیت"
+
+msgid "Success"
+msgstr "موفق"
+
+msgid "Failed"
+msgstr "ناموفق"
+
+msgid "No data found for the selected criteria"
+msgstr "هیچ داده‌ای برای معیارهای انتخاب شده یافت نشد"
+
+# Bulk Actions
+msgid "Bulk Actions"
+msgstr "عملیات گروهی"
+
+msgid "Select Action"
+msgstr "انتخاب عملیات"
+
+msgid "Search Selected Products"
+msgstr "جستجوی محصولات انتخاب شده"
+
+msgid "Clear Selected Cache"
+msgstr "پاک کردن کش انتخاب شده"
+
+msgid "Delete Selected Logs"
+msgstr "حذف لاگ‌های انتخاب شده"
+
+msgid "Apply"
+msgstr "اعمال"
+
+msgid "Select All"
+msgstr "انتخاب همه"
+
+msgid "Bulk operation completed successfully"
+msgstr "عملیات گروهی با موفقیت انجام شد"
+
+msgid "Bulk operation failed"
+msgstr "عملیات گروهی ناموفق بود"
+
+# API Messages
+msgid "API connection test successful"
+msgstr "تست اتصال API موفق بود"
+
+msgid "API connection test failed"
+msgstr "تست اتصال API ناموفق بود"
+
+msgid "Invalid API key"
+msgstr "کلید API نامعتبر"
+
+msgid "API rate limit exceeded"
+msgstr "محدودیت نرخ API تجاوز کرد"
+
+msgid "API request timeout"
+msgstr "زمان انتظار درخواست API تمام شد"
+
+msgid "API server error"
+msgstr "خطای سرور API"
+
+# Validation Messages
+msgid "Please enter a valid number"
+msgstr "لطفاً یک عدد معتبر وارد کنید"
+
+msgid "Please enter a valid URL"
+msgstr "لطفاً یک آدرس معتبر وارد کنید"
+
+msgid "This field is required"
+msgstr "این فیلد الزامی است"
+
+msgid "Value must be greater than 0"
+msgstr "مقدار باید بیشتر از 0 باشد"
+
+msgid "Invalid cache duration"
+msgstr "مدت زمان کش نامعتبر"
+
+# Error Messages
+msgid "WooCommerce is required for this plugin to work"
+msgstr "ووکامرس برای کارکرد این پلاگین الزامی است"
+
+msgid "Plugin activation failed"
+msgstr "فعال‌سازی پلاگین ناموفق بود"
+
+msgid "Database error occurred"
+msgstr "خطای پایگاه داده رخ داد"
+
+msgid "Permission denied"
+msgstr "دسترسی مجاز نیست"
+
+msgid "Invalid request"
+msgstr "درخواست نامعتبر"
+
+msgid "Product not found"
+msgstr "محصول یافت نشد"
+
+msgid "Price data not available"
+msgstr "داده‌های قیمت در دسترس نیست"
+
+# Success Messages
+msgid "Settings saved successfully"
+msgstr "تنظیمات با موفقیت ذخیره شد"
+
+msgid "Plugin activated successfully"
+msgstr "پلاگین با موفقیت فعال شد"
+
+msgid "Plugin deactivated successfully"
+msgstr "پلاگین با موفقیت غیرفعال شد"
+
+msgid "Data exported successfully"
+msgstr "داده‌ها با موفقیت صادر شد"
+
+msgid "Operation completed successfully"
+msgstr "عملیات با موفقیت انجام شد"
+
+# Time and Date
+msgid "Just now"
+msgstr "همین الان"
+
+msgid "minute ago"
+msgid_plural "minutes ago"
+msgstr[0] "دقیقه پیش"
+msgstr[1] "دقیقه پیش"
+
+msgid "hour ago"
+msgid_plural "hours ago"
+msgstr[0] "ساعت پیش"
+msgstr[1] "ساعت پیش"
+
+msgid "day ago"
+msgid_plural "days ago"
+msgstr[0] "روز پیش"
+msgstr[1] "روز پیش"
+
+msgid "week ago"
+msgid_plural "weeks ago"
+msgstr[0] "هفته پیش"
+msgstr[1] "هفته پیش"
+
+msgid "month ago"
+msgid_plural "months ago"
+msgstr[0] "ماه پیش"
+msgstr[1] "ماه پیش"
+
+# Currency
+msgid "Toman"
+msgstr "تومان"
+
+msgid "Rial"
+msgstr "ریال"
+
+# Shortcode
+msgid "Use shortcode [torob_price_compare] to display price comparison anywhere"
+msgstr "از شورت کد [torob_price_compare] برای نمایش مقایسه قیمت در هر جا استفاده کنید"
+
+# Help Text
+msgid "Need help? Check our documentation or contact support."
+msgstr "به کمک نیاز دارید؟ مستندات ما را بررسی کنید یا با پشتیبانی تماس بگیرید."
+
+msgid "Plugin Version"
+msgstr "نسخه پلاگین"
+
+msgid "WordPress Version"
+msgstr "نسخه وردپرس"
+
+msgid "WooCommerce Version"
+msgstr "نسخه ووکامرس"
+
+msgid "PHP Version"
+msgstr "نسخه PHP"
+
+# Tooltips
+msgid "Click to test API connection"
+msgstr "برای تست اتصال API کلیک کنید"
+
+msgid "Clear all cached price data"
+msgstr "پاک کردن تمام داده‌های قیمت کش شده"
+
+msgid "Refresh price data for this product"
+msgstr "بروزرسانی داده‌های قیمت برای این محصول"
+
+msgid "Export data in CSV format"
+msgstr "صادرات داده‌ها در فرمت CSV"
+
+msgid "Export data in JSON format"
+msgstr "صادرات داده‌ها در فرمت JSON"
+
+# Placeholders
+msgid "Enter API key..."
+msgstr "کلید API را وارد کنید..."
+
+msgid "Enter API endpoint URL..."
+msgstr "آدرس نقطه پایانی API را وارد کنید..."
+
+msgid "Search products..."
+msgstr "جستجوی محصولات..."
+
+msgid "Enter custom CSS..."
+msgstr "CSS سفارشی را وارد کنید..."
+
+# Units
+msgid "seconds"
+msgstr "ثانیه"
+
+msgid "minutes"
+msgstr "دقیقه"
+
+msgid "hours"
+msgstr "ساعت"
+
+msgid "days"
+msgstr "روز"
+
+msgid "KB"
+msgstr "کیلوبایت"
+
+msgid "MB"
+msgstr "مگابایت"
+
+msgid "GB"
+msgstr "گیگابایت"
+
+# Pagination
+msgid "Previous"
+msgstr "قبلی"
+
+msgid "Next"
+msgstr "بعدی"
+
+msgid "First"
+msgstr "اول"
+
+msgid "Last"
+msgstr "آخر"
+
+msgid "Page %d of %d"
+msgstr "صفحه %d از %d"
+
+msgid "Showing %d to %d of %d entries"
+msgstr "نمایش %d تا %d از %d ورودی"
+
+# Loading States
+msgid "Loading..."
+msgstr "در حال بارگذاری..."
+
+msgid "Please wait..."
+msgstr "لطفاً صبر کنید..."
+
+msgid "Processing..."
+msgstr "در حال پردازش..."
+
+msgid "Saving..."
+msgstr "در حال ذخیره..."
+
+msgid "Deleting..."
+msgstr "در حال حذف..."
+
+msgid "Updating..."
+msgstr "در حال بروزرسانی..."

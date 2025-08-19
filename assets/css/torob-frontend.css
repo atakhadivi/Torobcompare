@@ -1,0 +1,529 @@
+/**
+ * Frontend CSS for Torob Price Compare plugin
+ */
+
+/* RTL Support */
+.torob-price-comparison {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Tahoma', 'Arial', sans-serif;
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    background: #f9f9f9;
+    position: relative;
+}
+
+/* Search Container */
+.torob-search-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Search Button */
+.torob-search-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.torob-search-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+.torob-search-btn:active {
+    transform: translateY(0);
+}
+
+.torob-search-btn.loading {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.torob-search-btn .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Price Display */
+.torob-price-display {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.torob-price-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.torob-label {
+    font-size: 14px;
+    color: #666;
+    font-weight: normal;
+}
+
+.torob-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c5aa0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.torob-price::before {
+    content: "💰";
+    font-size: 20px;
+}
+
+.torob-savings {
+    font-size: 16px;
+    color: #27ae60;
+    font-weight: bold;
+    background: #e8f5e8;
+    padding: 8px 12px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.torob-savings::before {
+    content: "💸";
+    margin-left: 5px;
+}
+
+/* Torob Link */
+.torob-link {
+    display: inline-block;
+    background: #ff6b35;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.torob-link:hover {
+    background: #e55a2b;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+/* Refresh Button */
+.torob-refresh-btn {
+    background: #34495e;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    float: left;
+}
+
+.torob-refresh-btn:hover {
+    background: #2c3e50;
+    transform: translateY(-1px);
+}
+
+.torob-refresh-btn .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
+/* Messages */
+.torob-message {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.torob-message-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.torob-message-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.torob-message-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Price Comparison Layout */
+.torob-price-comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.torob-store-price,
+.torob-torob-price {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #e1e1e1;
+    text-align: center;
+}
+
+.torob-store-price {
+    border-color: #3498db;
+}
+
+.torob-torob-price {
+    border-color: #e74c3c;
+}
+
+.price-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.price-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.torob-store-price .price-value {
+    color: #3498db;
+}
+
+.torob-torob-price .price-value {
+    color: #e74c3c;
+}
+
+/* Savings Badge */
+.torob-savings-badge {
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background: #27ae60;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(39, 174, 96, 0.3);
+}
+
+/* Loading States */
+.torob-loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.torob-loading::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .torob-price-comparison {
+        margin: 15px 0;
+        padding: 12px;
+    }
+    
+    .torob-price-comparison-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .torob-search-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+    
+    .torob-price {
+        font-size: 20px;
+    }
+    
+    .torob-link,
+    .torob-refresh-btn {
+        display: block;
+        margin: 10px 0;
+        text-align: center;
+        float: none;
+    }
+    
+    .torob-price-info {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .torob-price-comparison {
+        margin: 10px 0;
+        padding: 10px;
+    }
+    
+    .torob-search-btn {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .torob-price {
+        font-size: 18px;
+    }
+    
+    .torob-savings {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .torob-price-comparison {
+        background: #2c3e50;
+        border-color: #34495e;
+        color: #ecf0f1;
+    }
+    
+    .torob-price-display {
+        background: #34495e;
+        border-color: #4a5f7a;
+        color: #ecf0f1;
+    }
+    
+    .torob-label {
+        color: #bdc3c7;
+    }
+    
+    .torob-store-price,
+    .torob-torob-price {
+        background: #34495e;
+        color: #ecf0f1;
+    }
+}
+
+/* Animation Effects */
+.torob-price-comparison {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.torob-price-display {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Hover Effects */
+.torob-price-comparison:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+/* Focus States for Accessibility */
+.torob-search-btn:focus,
+.torob-refresh-btn:focus,
+.torob-link:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .torob-search-btn,
+    .torob-refresh-btn {
+        display: none;
+    }
+    
+    .torob-price-comparison {
+        border: 1px solid #000;
+        background: white;
+        color: black;
+        box-shadow: none;
+    }
+    
+    .torob-link {
+        color: black;
+        text-decoration: underline;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .torob-price-comparison {
+        border: 2px solid #000;
+        background: #fff;
+        color: #000;
+    }
+    
+    .torob-search-btn {
+        background: #000;
+        color: #fff;
+        border: 2px solid #000;
+    }
+    
+    .torob-price {
+        color: #000;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .torob-price-comparison,
+    .torob-price-display,
+    .torob-search-btn,
+    .torob-refresh-btn,
+    .torob-link {
+        animation: none;
+        transition: none;
+    }
+    
+    .spinner {
+        animation: none;
+    }
+}
+
+/* Custom Scrollbar for Price Lists */
+.torob-price-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.torob-price-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.torob-price-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.torob-price-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Tooltip Styles */
+.torob-tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.torob-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+.torob-tooltip:hover::after {
+    opacity: 1;
+}
+
+/* Status Indicators */
+.torob-status-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.torob-status-success {
+    background: #27ae60;
+}
+
+.torob-status-error {
+    background: #e74c3c;
+}
+
+.torob-status-warning {
+    background: #f39c12;
+}
+
+.torob-status-info {
+    background: #3498db;
+}

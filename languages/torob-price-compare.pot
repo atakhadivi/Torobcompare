@@ -1,0 +1,565 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Torob Price Compare 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 12:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin Information
+msgid "Torob Price Compare"
+msgstr ""
+
+msgid "Compare product prices with Torob marketplace and display the lowest price to customers."
+msgstr ""
+
+# Admin Menu
+msgid "Dashboard"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Reports"
+msgstr ""
+
+msgid "Cache Management"
+msgstr ""
+
+# Dashboard
+msgid "Welcome to Torob Price Compare"
+msgstr ""
+
+msgid "Monitor and compare your product prices with Torob marketplace"
+msgstr ""
+
+msgid "Total Searches"
+msgstr ""
+
+msgid "Cached Prices"
+msgstr ""
+
+msgid "Success Rate"
+msgstr ""
+
+msgid "Last Update"
+msgstr ""
+
+msgid "Recent Activities"
+msgstr ""
+
+msgid "Search Statistics"
+msgstr ""
+
+msgid "Cache Statistics"
+msgstr ""
+
+msgid "No recent activities found."
+msgstr ""
+
+# Settings
+msgid "General Settings"
+msgstr ""
+
+msgid "Enable Plugin"
+msgstr ""
+
+msgid "Enable or disable the Torob price comparison feature"
+msgstr ""
+
+msgid "Cache Duration (hours)"
+msgstr ""
+
+msgid "How long to cache price data before refreshing"
+msgstr ""
+
+msgid "Display Position"
+msgstr ""
+
+msgid "Where to display the price comparison on product pages"
+msgstr ""
+
+msgid "After Product Summary"
+msgstr ""
+
+msgid "After Product Price"
+msgstr ""
+
+msgid "After Add to Cart Button"
+msgstr ""
+
+msgid "Custom Position (Shortcode)"
+msgstr ""
+
+msgid "Search Button Text"
+msgstr ""
+
+msgid "Text displayed on the search button"
+msgstr ""
+
+msgid "Auto Search"
+msgstr ""
+
+msgid "Automatically search for prices when product page loads"
+msgstr ""
+
+msgid "API Settings"
+msgstr ""
+
+msgid "API Endpoint"
+msgstr ""
+
+msgid "Torob API endpoint URL"
+msgstr ""
+
+msgid "API Key"
+msgstr ""
+
+msgid "Your Torob API key"
+msgstr ""
+
+msgid "Request Timeout (seconds)"
+msgstr ""
+
+msgid "Maximum time to wait for API response"
+msgstr ""
+
+msgid "Rate Limit (requests per minute)"
+msgstr ""
+
+msgid "Maximum number of API requests per minute"
+msgstr ""
+
+msgid "Display Settings"
+msgstr ""
+
+msgid "Show Savings Amount"
+msgstr ""
+
+msgid "Display how much customer can save"
+msgstr ""
+
+msgid "Show Torob Link"
+msgstr ""
+
+msgid "Display link to Torob product page"
+msgstr ""
+
+msgid "Custom CSS"
+msgstr ""
+
+msgid "Add custom CSS for price comparison display"
+msgstr ""
+
+# Frontend
+msgid "Find Best Price on Torob"
+msgstr ""
+
+msgid "Compare Prices"
+msgstr ""
+
+msgid "Searching for best prices..."
+msgstr ""
+
+msgid "Refreshing prices..."
+msgstr ""
+
+msgid "Lowest Price on Torob"
+msgstr ""
+
+msgid "Your Store Price"
+msgstr ""
+
+msgid "You Save"
+msgstr ""
+
+msgid "View on Torob"
+msgstr ""
+
+msgid "Refresh Prices"
+msgstr ""
+
+msgid "Price comparison data not available"
+msgstr ""
+
+msgid "No price data found on Torob"
+msgstr ""
+
+msgid "Error loading price data"
+msgstr ""
+
+msgid "Price data updated successfully"
+msgstr ""
+
+msgid "Failed to update price data"
+msgstr ""
+
+# Cache Management
+msgid "Cache Overview"
+msgstr ""
+
+msgid "Total Cached Items"
+msgstr ""
+
+msgid "Cache Hit Rate"
+msgstr ""
+
+msgid "Average Response Time"
+msgstr ""
+
+msgid "Cache Size"
+msgstr ""
+
+msgid "Clear All Cache"
+msgstr ""
+
+msgid "Clear Expired Cache"
+msgstr ""
+
+msgid "Refresh Cache"
+msgstr ""
+
+msgid "Cache cleared successfully"
+msgstr ""
+
+msgid "Failed to clear cache"
+msgstr ""
+
+msgid "Cache refreshed successfully"
+msgstr ""
+
+msgid "Recent Cache Entries"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Cached At"
+msgstr ""
+
+msgid "Expires At"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Refresh"
+msgstr ""
+
+# Reports
+msgid "Price Comparison Reports"
+msgstr ""
+
+msgid "Search Logs"
+msgstr ""
+
+msgid "Export Data"
+msgstr ""
+
+msgid "Date Range"
+msgstr ""
+
+msgid "From"
+msgstr ""
+
+msgid "To"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Export CSV"
+msgstr ""
+
+msgid "Export JSON"
+msgstr ""
+
+msgid "Search Date"
+msgstr ""
+
+msgid "Product Name"
+msgstr ""
+
+msgid "Store Price"
+msgstr ""
+
+msgid "Torob Price"
+msgstr ""
+
+msgid "Savings"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Success"
+msgstr ""
+
+msgid "Failed"
+msgstr ""
+
+msgid "No data found for the selected criteria"
+msgstr ""
+
+# Bulk Actions
+msgid "Bulk Actions"
+msgstr ""
+
+msgid "Select Action"
+msgstr ""
+
+msgid "Search Selected Products"
+msgstr ""
+
+msgid "Clear Selected Cache"
+msgstr ""
+
+msgid "Delete Selected Logs"
+msgstr ""
+
+msgid "Apply"
+msgstr ""
+
+msgid "Select All"
+msgstr ""
+
+msgid "Bulk operation completed successfully"
+msgstr ""
+
+msgid "Bulk operation failed"
+msgstr ""
+
+# API Messages
+msgid "API connection test successful"
+msgstr ""
+
+msgid "API connection test failed"
+msgstr ""
+
+msgid "Invalid API key"
+msgstr ""
+
+msgid "API rate limit exceeded"
+msgstr ""
+
+msgid "API request timeout"
+msgstr ""
+
+msgid "API server error"
+msgstr ""
+
+# Validation Messages
+msgid "Please enter a valid number"
+msgstr ""
+
+msgid "Please enter a valid URL"
+msgstr ""
+
+msgid "This field is required"
+msgstr ""
+
+msgid "Value must be greater than 0"
+msgstr ""
+
+msgid "Invalid cache duration"
+msgstr ""
+
+# Error Messages
+msgid "WooCommerce is required for this plugin to work"
+msgstr ""
+
+msgid "Plugin activation failed"
+msgstr ""
+
+msgid "Database error occurred"
+msgstr ""
+
+msgid "Permission denied"
+msgstr ""
+
+msgid "Invalid request"
+msgstr ""
+
+msgid "Product not found"
+msgstr ""
+
+msgid "Price data not available"
+msgstr ""
+
+# Success Messages
+msgid "Settings saved successfully"
+msgstr ""
+
+msgid "Plugin activated successfully"
+msgstr ""
+
+msgid "Plugin deactivated successfully"
+msgstr ""
+
+msgid "Data exported successfully"
+msgstr ""
+
+msgid "Operation completed successfully"
+msgstr ""
+
+# Time and Date
+msgid "Just now"
+msgstr ""
+
+msgid "minute ago"
+msgid_plural "minutes ago"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "hour ago"
+msgid_plural "hours ago"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "day ago"
+msgid_plural "days ago"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "week ago"
+msgid_plural "weeks ago"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "month ago"
+msgid_plural "months ago"
+msgstr[0] ""
+msgstr[1] ""
+
+# Currency
+msgid "Toman"
+msgstr ""
+
+msgid "Rial"
+msgstr ""
+
+# Shortcode
+msgid "Use shortcode [torob_price_compare] to display price comparison anywhere"
+msgstr ""
+
+# Help Text
+msgid "Need help? Check our documentation or contact support."
+msgstr ""
+
+msgid "Plugin Version"
+msgstr ""
+
+msgid "WordPress Version"
+msgstr ""
+
+msgid "WooCommerce Version"
+msgstr ""
+
+msgid "PHP Version"
+msgstr ""
+
+# Tooltips
+msgid "Click to test API connection"
+msgstr ""
+
+msgid "Clear all cached price data"
+msgstr ""
+
+msgid "Refresh price data for this product"
+msgstr ""
+
+msgid "Export data in CSV format"
+msgstr ""
+
+msgid "Export data in JSON format"
+msgstr ""
+
+# Placeholders
+msgid "Enter API key..."
+msgstr ""
+
+msgid "Enter API endpoint URL..."
+msgstr ""
+
+msgid "Search products..."
+msgstr ""
+
+msgid "Enter custom CSS..."
+msgstr ""
+
+# Units
+msgid "seconds"
+msgstr ""
+
+msgid "minutes"
+msgstr ""
+
+msgid "hours"
+msgstr ""
+
+msgid "days"
+msgstr ""
+
+msgid "KB"
+msgstr ""
+
+msgid "MB"
+msgstr ""
+
+msgid "GB"
+msgstr ""
+
+# Pagination
+msgid "Previous"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "First"
+msgstr ""
+
+msgid "Last"
+msgstr ""
+
+msgid "Page %d of %d"
+msgstr ""
+
+msgid "Showing %d to %d of %d entries"
+msgstr ""
+
+# Loading States
+msgid "Loading..."
+msgstr ""
+
+msgid "Please wait..."
+msgstr ""
+
+msgid "Processing..."
+msgstr ""
+
+msgid "Saving..."
+msgstr ""
+
+msgid "Deleting..."
+msgstr ""
+
+msgid "Updating..."
+msgstr ""
